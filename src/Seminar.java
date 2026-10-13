@@ -1,4 +1,5 @@
-public class Seminar extends KegiatanKampus {
+public class Seminar extends KegiatanKampus
+        implements DapatDiikuti {
 
     private String pembicara;
 
@@ -34,6 +35,16 @@ public class Seminar extends KegiatanKampus {
 
         System.out.println(
             "Seminar dimulai dengan pemaparan materi."
+        );
+    }
+
+    @Override
+    public void daftarPeserta(int jumlah) {
+
+        setPeserta(getPeserta() + jumlah);
+
+        System.out.println(
+            jumlah + " peserta berhasil ditambahkan ke seminar."
         );
     }
 }

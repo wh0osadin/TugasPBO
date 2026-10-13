@@ -1,4 +1,4 @@
-public class KegiatanKampus {
+public abstract class KegiatanKampus {
 
     private String namaKegiatan;
     private String tanggal;
@@ -7,7 +7,6 @@ public class KegiatanKampus {
 
     private static int totalKegiatan = 0;
 
-  
     public KegiatanKampus(String namaKegiatan, String tanggal,
                           String lokasi, int peserta) {
 
@@ -63,10 +62,7 @@ public class KegiatanKampus {
         System.out.println("Jumlah Peserta: " + peserta);
     }
 
-    public void mulaiKegiatan() {
-
-        System.out.println("Kegiatan sedang berlangsung.");
-    }
+    public abstract void mulaiKegiatan();
 
     public void cariKegiatan(String nama) {
 

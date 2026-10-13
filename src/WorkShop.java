@@ -1,4 +1,5 @@
-public class WorkShop extends KegiatanKampus {
+public class WorkShop extends KegiatanKampus
+        implements DapatDiikuti {
 
     private String materi;
 
@@ -34,6 +35,16 @@ public class WorkShop extends KegiatanKampus {
 
         System.out.println(
             "Workshop dimulai dengan kegiatan praktik."
+        );
+    }
+
+    @Override
+    public void daftarPeserta(int jumlah) {
+
+        setPeserta(getPeserta() + jumlah);
+
+        System.out.println(
+            jumlah + " peserta berhasil ditambahkan ke workshop."
         );
     }
 }

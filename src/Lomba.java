@@ -1,4 +1,5 @@
-public class Lomba extends KegiatanKampus {
+public class Lomba extends KegiatanKampus
+        implements DapatDiikuti {
 
     private String jenisLomba;
 
@@ -34,6 +35,16 @@ public class Lomba extends KegiatanKampus {
 
         System.out.println(
             "Lomba dimulai dengan pertandingan."
+        );
+    }
+
+    @Override
+    public void daftarPeserta(int jumlah) {
+
+        setPeserta(getPeserta() + jumlah);
+
+        System.out.println(
+            jumlah + " peserta berhasil ditambahkan ke lomba."
         );
     }
 }

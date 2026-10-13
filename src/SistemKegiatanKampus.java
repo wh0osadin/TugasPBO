@@ -57,7 +57,8 @@ public class SistemKegiatanKampus {
             System.out.println("6. Proses Kegiatan");
             System.out.println("7. Cari Data");
             System.out.println("8. Total Kegiatan");
-            System.out.println("9. Keluar");
+            System.out.println("9. Daftar Peserta");
+            System.out.println("10. Keluar");
             System.out.println("================================");
 
             System.out.print("Pilih menu: ");
@@ -338,8 +339,52 @@ public class SistemKegiatanKampus {
                     );
 
                     break;
+                    
+                    case 9:
 
-                case 9:
+    if (jumlahKegiatan == 0) {
+
+        System.out.println(
+            "Belum ada kegiatan."
+        );
+
+    } else {
+
+        System.out.print(
+            "Pilih nomor kegiatan: "
+        );
+
+        int nomor = input.nextInt();
+
+        System.out.print(
+            "Jumlah peserta yang ditambahkan: "
+        );
+
+        int jumlah = input.nextInt();
+
+        input.nextLine();
+
+        if (nomor >= 1 &&
+            nomor <= jumlahKegiatan) {
+
+            // ===== MODUL 7: Interface Reference =====
+            DapatDiikuti kegiatan =
+                    (DapatDiikuti)
+                    daftarKegiatan[nomor - 1];
+
+            kegiatan.daftarPeserta(jumlah);
+
+        } else {
+
+            System.out.println(
+                "Nomor kegiatan tidak tersedia."
+            );
+        }
+    }
+
+    break;
+
+                case 10:
 
                     System.out.println(
                         "Terima kasih telah menggunakan "
