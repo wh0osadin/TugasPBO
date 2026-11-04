@@ -1,406 +1,313 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class SistemKegiatanKampus {
 
+    // Menyimpan daftar kegiatan menggunakan ArrayList
+    static ArrayList<KegiatanKampus> daftarKegiatan =
+            new ArrayList<KegiatanKampus>();
+
+    // Menyimpan data anggota menggunakan HashMap
+    static HashMap<String, String> dataAnggota =
+            new HashMap<String, String>();
+
+    static Scanner input = new Scanner(System.in);
+
+    // Method untuk memproses kegiatan
     public static void prosesKegiatan(KegiatanKampus kegiatan) {
-
-        System.out.println();
-        System.out.println("===== PROSES KEGIATAN =====");
-
+        kegiatan.tampilkanInfo();
         kegiatan.mulaiKegiatan();
     }
 
-    public static void cariData(KegiatanKampus kegiatan) {
+    // Method pencarian kegiatan berdasarkan nama
+    public static void cariData(String nama)
+            throws KegiatanTidakDitemukanException {
 
-        System.out.println();
-        System.out.println("Data kegiatan:");
+        boolean ditemukan = false;
 
-        kegiatan.tampilkanInfo();
-    }
+        for (int i = 0; i < daftarKegiatan.size(); i++) {
 
-    public static void cariData(KegiatanKampus kegiatan,
-                                int peserta) {
+            if (daftarKegiatan.get(i).getNamaKegiatan()
+                    .equalsIgnoreCase(nama)) {
 
-        if (kegiatan.getPeserta() == peserta) {
+                daftarKegiatan.get(i).tampilkanInfo();
+                ditemukan = true;
+            }
+        }
 
-            System.out.println();
-            System.out.println(
-                "Kegiatan dengan jumlah peserta "
-                + peserta
+        if (ditemukan == false) {
+            throw new KegiatanTidakDitemukanException(
+                    "Kegiatan tidak ditemukan!"
             );
-
-            kegiatan.tampilkanInfo();
         }
     }
 
     public static void main(String[] args) {
 
-        Scanner input = new Scanner(System.in);
-
-        KegiatanKampus[] daftarKegiatan =
-                new KegiatanKampus[20];
-
-        int jumlahKegiatan = 0;
-        int pilihan;
+        int pilihan = 0;
 
         do {
 
-            System.out.println();
-            System.out.println("================================");
-            System.out.println("     SISTEM KEGIATAN KAMPUS");
-            System.out.println("================================");
-            System.out.println("1. Tambah Seminar");
-            System.out.println("2. Tambah Workshop");
-            System.out.println("3. Tambah Lomba");
-            System.out.println("4. Tampilkan Semua Kegiatan");
-            System.out.println("5. Mulai Semua Kegiatan");
-            System.out.println("6. Proses Kegiatan");
-            System.out.println("7. Cari Data");
-            System.out.println("8. Total Kegiatan");
-            System.out.println("9. Daftar Peserta");
-            System.out.println("10. Keluar");
-            System.out.println("================================");
+            try {
 
-            System.out.print("Pilih menu: ");
-            pilihan = input.nextInt();
-            input.nextLine();
+                System.out.println("\n===== SISTEM KEGIATAN KAMPUS =====");
+                System.out.println("1. Tambah Seminar");
+                System.out.println("2. Tambah Workshop");
+                System.out.println("3. Tambah Lomba");
+                System.out.println("4. Tampilkan Semua Kegiatan");
+                System.out.println("5. Mulai Semua Kegiatan");
+                System.out.println("6. Proses Kegiatan");
+                System.out.println("7. Cari Data Kegiatan");
+                System.out.println("8. Total Kegiatan");
+                System.out.println("9. Daftar Peserta");
+                System.out.println("10. Tambah Data Anggota");
+                System.out.println("11. Cari Data Anggota");
+                System.out.println("12. Tampilkan Semua Anggota");
+                System.out.println("13. Keluar");
+                System.out.print("Pilih menu: ");
 
-            switch (pilihan) {
+                pilihan = input.nextInt();
+                input.nextLine();
 
-                case 1:
+                switch (pilihan) {
 
-                    System.out.println();
-                    System.out.println("===== TAMBAH SEMINAR =====");
+                    case 1:
+                        System.out.print("Nama Seminar: ");
+                        String namaSeminar = input.nextLine();
 
-                    System.out.print("Nama kegiatan: ");
-                    String namaSeminar = input.nextLine();
+                        System.out.print("Tanggal: ");
+                        String tanggalSeminar = input.nextLine();
 
-                    System.out.print("Tanggal: ");
-                    String tanggalSeminar = input.nextLine();
+                        System.out.print("Lokasi: ");
+                        String lokasiSeminar = input.nextLine();
 
-                    System.out.print("Lokasi: ");
-                    String lokasiSeminar = input.nextLine();
-
-                    System.out.print("Jumlah peserta: ");
-                    int pesertaSeminar = input.nextInt();
-                    input.nextLine();
-
-                    System.out.print("Nama pembicara: ");
-                    String pembicara = input.nextLine();
-
-                    daftarKegiatan[jumlahKegiatan] =
-                            new Seminar(
-                                namaSeminar,
-                                tanggalSeminar,
-                                lokasiSeminar,
-                                pesertaSeminar,
-                                pembicara
-                            );
-
-                    jumlahKegiatan++;
-
-                    System.out.println(
-                        "Seminar berhasil ditambahkan."
-                    );
-
-                    break;
-
-                case 2:
-
-                    System.out.println();
-                    System.out.println("===== TAMBAH WORKSHOP =====");
-
-                    System.out.print("Nama kegiatan: ");
-                    String namaWorkshop = input.nextLine();
-
-                    System.out.print("Tanggal: ");
-                    String tanggalWorkshop = input.nextLine();
-
-                    System.out.print("Lokasi: ");
-                    String lokasiWorkshop = input.nextLine();
-
-                    System.out.print("Jumlah peserta: ");
-                    int pesertaWorkshop = input.nextInt();
-                    input.nextLine();
-
-                    System.out.print("Materi workshop: ");
-                    String materi = input.nextLine();
-
-                    daftarKegiatan[jumlahKegiatan] =
-                            new WorkShop(
-                                namaWorkshop,
-                                tanggalWorkshop,
-                                lokasiWorkshop,
-                                pesertaWorkshop,
-                                materi
-                            );
-
-                    jumlahKegiatan++;
-
-                    System.out.println(
-                        "Workshop berhasil ditambahkan."
-                    );
-
-                    break;
-
-                case 3:
-
-                    System.out.println();
-                    System.out.println("===== TAMBAH LOMBA =====");
-
-                    System.out.print("Nama kegiatan: ");
-                    String namaLomba = input.nextLine();
-
-                    System.out.print("Tanggal: ");
-                    String tanggalLomba = input.nextLine();
-
-                    System.out.print("Lokasi: ");
-                    String lokasiLomba = input.nextLine();
-
-                    System.out.print("Jumlah peserta: ");
-                    int pesertaLomba = input.nextInt();
-                    input.nextLine();
-
-                    System.out.print("Jenis lomba: ");
-                    String jenisLomba = input.nextLine();
-
-                    daftarKegiatan[jumlahKegiatan] =
-                            new Lomba(
-                                namaLomba,
-                                tanggalLomba,
-                                lokasiLomba,
-                                pesertaLomba,
-                                jenisLomba
-                            );
-
-                    jumlahKegiatan++;
-
-                    System.out.println(
-                        "Lomba berhasil ditambahkan."
-                    );
-
-                    break;
-
-                case 4:
-
-                    System.out.println();
-                    System.out.println(
-                        "===== SEMUA KEGIATAN ====="
-                    );
-
-                    for (int i = 0;
-                         i < jumlahKegiatan;
-                         i++) {
-
-                        System.out.println();
-                        System.out.println(
-                            "Data ke-" + (i + 1)
-                        );
-
-                        daftarKegiatan[i].tampilkanInfo();
-                    }
-
-                    break;
-
-                case 5:
-
-                    System.out.println();
-                    System.out.println(
-                        "===== MULAI SEMUA KEGIATAN ====="
-                    );
-
-                    for (int i = 0;
-                         i < jumlahKegiatan;
-                         i++) {
-
-                        System.out.print(
-                            daftarKegiatan[i]
-                            .getNamaKegiatan() + " : "
-                        );
-
-                        daftarKegiatan[i].mulaiKegiatan();
-                    }
-
-                    break;
-
-                case 6:
-
-                    if (jumlahKegiatan == 0) {
-
-                        System.out.println(
-                            "Belum ada kegiatan."
-                        );
-
-                    } else {
-
-                        System.out.print(
-                            "Pilih nomor kegiatan: "
-                        );
-
-                        int nomor = input.nextInt();
+                        System.out.print("Jumlah Peserta: ");
+                        int pesertaSeminar = input.nextInt();
                         input.nextLine();
 
-                        if (nomor >= 1 &&
-                            nomor <= jumlahKegiatan) {
+                        System.out.print("Nama Pembicara: ");
+                        String pembicara = input.nextLine();
 
-                            prosesKegiatan(
-                                daftarKegiatan[nomor - 1]
-                            );
+                        daftarKegiatan.add(
+                            new Seminar(namaSeminar, tanggalSeminar,
+                            lokasiSeminar, pesertaSeminar, pembicara)
+                        );
 
+                        System.out.println("Seminar berhasil ditambahkan!");
+                        break;
+
+                    case 2:
+                        System.out.print("Nama Workshop: ");
+                        String namaWorkshop = input.nextLine();
+
+                        System.out.print("Tanggal: ");
+                        String tanggalWorkshop = input.nextLine();
+
+                        System.out.print("Lokasi: ");
+                        String lokasiWorkshop = input.nextLine();
+
+                        System.out.print("Jumlah Peserta: ");
+                        int pesertaWorkshop = input.nextInt();
+                        input.nextLine();
+
+                        System.out.print("Materi: ");
+                        String materi = input.nextLine();
+
+                        daftarKegiatan.add(
+                            new WorkShop(namaWorkshop, tanggalWorkshop,
+                            lokasiWorkshop, pesertaWorkshop, materi)
+                        );
+
+                        System.out.println("Workshop berhasil ditambahkan!");
+                        break;
+
+                    case 3:
+                        System.out.print("Nama Lomba: ");
+                        String namaLomba = input.nextLine();
+
+                        System.out.print("Tanggal: ");
+                        String tanggalLomba = input.nextLine();
+
+                        System.out.print("Lokasi: ");
+                        String lokasiLomba = input.nextLine();
+
+                        System.out.print("Jumlah Peserta: ");
+                        int pesertaLomba = input.nextInt();
+                        input.nextLine();
+
+                        System.out.print("Jenis Lomba: ");
+                        String jenisLomba = input.nextLine();
+
+                        daftarKegiatan.add(
+                            new Lomba(namaLomba, tanggalLomba,
+                            lokasiLomba, pesertaLomba, jenisLomba)
+                        );
+
+                        System.out.println("Lomba berhasil ditambahkan!");
+                        break;
+
+                    case 4:
+                        if (daftarKegiatan.isEmpty()) {
+                            System.out.println("Belum ada kegiatan.");
                         } else {
-
-                            System.out.println(
-                                "Nomor tidak tersedia."
-                            );
+                            for (int i = 0; i < daftarKegiatan.size(); i++) {
+                                System.out.println("\nKegiatan ke-" + (i + 1));
+                                daftarKegiatan.get(i).tampilkanInfo();
+                            }
                         }
-                    }
+                        break;
 
-                    break;
+                    case 5:
+                        if (daftarKegiatan.isEmpty()) {
+                            System.out.println("Belum ada kegiatan.");
+                        } else {
+                            for (int i = 0; i < daftarKegiatan.size(); i++) {
+                                daftarKegiatan.get(i).mulaiKegiatan();
+                            }
+                        }
+                        break;
 
-                case 7:
-
-                    if (jumlahKegiatan == 0) {
-
-                        System.out.println(
-                            "Belum ada kegiatan."
-                        );
-
-                    } else {
-
-                        System.out.println(
-                            "1. Cari berdasarkan kegiatan"
-                        );
-
-                        System.out.println(
-                            "2. Cari berdasarkan peserta"
-                        );
-
-                        System.out.print("Pilih: ");
-                        int cari = input.nextInt();
-                        input.nextLine();
-
-                        if (cari == 1) {
-
-                            System.out.print(
-                                "Nomor kegiatan: "
-                            );
-
-                            int nomor =
-                                    input.nextInt();
-
+                    case 6:
+                        if (daftarKegiatan.isEmpty()) {
+                            System.out.println("Belum ada kegiatan.");
+                        } else {
+                            System.out.print("Masukkan nomor kegiatan: ");
+                            int nomor = input.nextInt();
                             input.nextLine();
 
                             if (nomor >= 1 &&
-                                nomor <= jumlahKegiatan) {
+                                nomor <= daftarKegiatan.size()) {
 
-                                cariData(
-                                    daftarKegiatan[
-                                        nomor - 1
-                                    ]
+                                prosesKegiatan(
+                                    daftarKegiatan.get(nomor - 1)
                                 );
+
+                            } else {
+                                System.out.println("Nomor kegiatan tidak valid.");
                             }
+                        }
+                        break;
 
-                        } else if (cari == 2) {
+                    case 7:
+                        System.out.print("Masukkan nama kegiatan: ");
+                        String cariNama = input.nextLine();
 
-                            System.out.print(
-                                "Jumlah peserta: "
-                            );
+                        try {
+                            cariData(cariNama);
+                        } catch (KegiatanTidakDitemukanException e) {
+                            System.out.println("Kesalahan: " + e.getMessage());
+                        }
+                        break;
 
-                            int peserta =
-                                    input.nextInt();
+                    case 8:
+                        System.out.println(
+                            "Total kegiatan: " + daftarKegiatan.size()
+                        );
+                        break;
+
+                    case 9:
+                        if (daftarKegiatan.isEmpty()) {
+                            System.out.println("Belum ada kegiatan.");
+                        } else {
+                            System.out.print("Nomor kegiatan: ");
+                            int nomorPeserta = input.nextInt();
+
+                            if (nomorPeserta >= 1 &&
+                                nomorPeserta <= daftarKegiatan.size()) {
+
+                                System.out.print("Jumlah peserta yang daftar: ");
+                                int jumlah = input.nextInt();
+
+                                if (jumlah > 0) {
+                                    KegiatanKampus kegiatan =
+                                        daftarKegiatan.get(nomorPeserta - 1);
+
+                                    if (kegiatan instanceof DapatDiikuti) {
+                                        ((DapatDiikuti) kegiatan)
+                                            .daftarPeserta(jumlah);
+                                    } else {
+                                        System.out.println(
+                                            "Kegiatan tidak bisa menerima pendaftaran."
+                                        );
+                                    }
+                                } else {
+                                    System.out.println(
+                                        "Jumlah peserta harus lebih dari 0."
+                                    );
+                                }
+
+                            } else {
+                                System.out.println("Nomor kegiatan tidak valid.");
+                            }
 
                             input.nextLine();
+                        }
+                        break;
 
-                            for (int i = 0;
-                                 i < jumlahKegiatan;
-                                 i++) {
+                    case 10:
+                        System.out.print("Masukkan ID anggota: ");
+                        String id = input.nextLine();
 
-                                cariData(
-                                    daftarKegiatan[i],
-                                    peserta
+                        System.out.print("Masukkan nama anggota: ");
+                        String namaAnggota = input.nextLine();
+
+                        dataAnggota.put(id, namaAnggota);
+
+                        System.out.println("Data anggota berhasil ditambahkan!");
+                        break;
+
+                    case 11:
+                        System.out.print("Masukkan ID anggota yang dicari: ");
+                        String cariId = input.nextLine();
+
+                        if (dataAnggota.containsKey(cariId)) {
+                            System.out.println(
+                                "Nama anggota: " + dataAnggota.get(cariId)
+                            );
+                        } else {
+                            System.out.println("Anggota tidak ditemukan.");
+                        }
+                        break;
+
+                    case 12:
+                        if (dataAnggota.isEmpty()) {
+                            System.out.println("Belum ada data anggota.");
+                        } else {
+                            System.out.println("\n===== DATA ANGGOTA =====");
+
+                            for (Map.Entry<String, String> data
+                                    : dataAnggota.entrySet()) {
+
+                                System.out.println(
+                                    "ID: " + data.getKey()
+                                    + " | Nama: " + data.getValue()
                                 );
                             }
-
-                        } else {
-
-                            System.out.println(
-                                "Pilihan tidak tersedia."
-                            );
                         }
-                    }
+                        break;
 
-                    break;
+                    case 13:
+                        System.out.println("Program selesai.");
+                        break;
 
-                case 8:
+                    default:
+                        System.out.println("Pilihan tidak tersedia.");
+                }
 
-                    System.out.println(
-                        "Total kegiatan: "
-                        + KegiatanKampus.getTotalKegiatan()
-                    );
+            } catch (InputMismatchException e) {
 
-                    break;
-                    
-                    case 9:
+                System.out.println("Input harus berupa angka!");
+                input.nextLine();
 
-    if (jumlahKegiatan == 0) {
+            } finally {
 
-        System.out.println(
-            "Belum ada kegiatan."
-        );
-
-    } else {
-
-        System.out.print(
-            "Pilih nomor kegiatan: "
-        );
-
-        int nomor = input.nextInt();
-
-        System.out.print(
-            "Jumlah peserta yang ditambahkan: "
-        );
-
-        int jumlah = input.nextInt();
-
-        input.nextLine();
-
-        if (nomor >= 1 &&
-            nomor <= jumlahKegiatan) {
-
-            // ===== MODUL 7: Interface Reference =====
-            DapatDiikuti kegiatan =
-                    (DapatDiikuti)
-                    daftarKegiatan[nomor - 1];
-
-            kegiatan.daftarPeserta(jumlah);
-
-        } else {
-
-            System.out.println(
-                "Nomor kegiatan tidak tersedia."
-            );
-        }
-    }
-
-    break;
-
-                case 10:
-
-                    System.out.println(
-                        "Terima kasih telah menggunakan "
-                        + "Sistem Kegiatan Kampus."
-                    );
-
-                    break;
-
-                default:
-
-                    System.out.println(
-                        "Menu tidak tersedia."
-                    );
+                System.out.println("Proses menu selesai.");
             }
 
-        } while (pilihan != 9);
+        } while (pilihan != 13);
 
         input.close();
     }
