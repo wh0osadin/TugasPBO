@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class SistemKegiatanKampus {
-
+    
     // Menyimpan daftar kegiatan menggunakan ArrayList
     static ArrayList<KegiatanKampus> daftarKegiatan =
             new ArrayList<KegiatanKampus>();
